@@ -1,16 +1,16 @@
 {
-  "name": "authentification",
+  "name": "e-commerce",
   "version": "1.0.0",
-  "description": "",
+  "description": "MERN e-commerce store",
   "main": "server.js",
   "scripts": {
-    "start":"node server/server",
-    "back": "nodemon server/server",
-    "client": " npm start --prefix Client",
+    
+    "back": "nodemon server",
+    "client": " cd .. && cd client && npm start",
     "dev": "concurrently \"npm run back\" \"npm run client\"",
     "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install --prefix Client && npm run build --prefix Client"
   },
-  "author": "",
+  "author": "Amina Mkhinini",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

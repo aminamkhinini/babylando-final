@@ -49,8 +49,8 @@ export default function Register () {
 // functions
 
 const [input, setInput] = useState({
-  firstname:'',
-  lastname:'',
+  name:'',
+
   email:'',
   password:''
 })
@@ -81,24 +81,13 @@ const handelSubmit = (e) => {
             required
             fullWidth
             id="firstname"
-            label="firstname"
-            name="firstname"
-            autoComplete="firstname"
+            label="name"
+            name="name"
+            autoComplete="name"
             autoFocus
             onChange={handelChange}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="lastname"
-            label="lastname"
-            name="lastname"
-            autoComplete="lastname"
-            autoFocus
-            onChange={handelChange}
-          />
+         
           <TextField
             variant="outlined"
             margin="normal"

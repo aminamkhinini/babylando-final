@@ -19,6 +19,7 @@ import Register from './pages/Register';
 import Products from './pages/Products';
 import  Admin from './pages/Admin';
 import PrivateRouteAdmin from './components/PrivateRouteAdmin'
+import PrivateRoute from './components/PrivateRoute'
 import Conseils from './pages/Conseils';
 import Conseil1 from './pages/Conseil1';
 import Conseil2 from './pages/Conseil2';
@@ -49,7 +50,7 @@ function App() {
      <Route exact path='/contact' component ={contact}/>
      <Route exact path='/Products' component ={Products}/>
      <Route exact path="/ProductScreen/:id" component={ProductScreen}/>
-     
+   
 
      
      <Route exact path='/Conseils' component ={Conseils}/>
@@ -58,7 +59,12 @@ function App() {
      <Route exact path='/Conseil3' component ={Conseil3}/>
      <Route exact path='/Conseil4' component ={Conseil4}/>
      <Route exact path='/' component ={Home}/>
-     <PrivateRouteAdmin exact path='/Admin' component ={ Admin}/>
+     
+     <PrivateRouteAdmin exact path='/Admin' component ={ Admin}>
+
+     </PrivateRouteAdmin>
+     
+
 
                     <Route exact path='/cart/:id?' component={Cart} />
                      <Route path='/order/:id' component={Order} />
@@ -66,7 +72,7 @@ function App() {
                     <Route path='/payment' component={Payment} />
                     <Route path='/shipping' component={Shipping} />
                   
-                    <Route path='/profile' component={Profile} />
+                    <PrivateRoute path='/profile' component={Profile} />
                 </Container>
             </main>
             <Footer />

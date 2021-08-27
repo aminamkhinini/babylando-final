@@ -9,14 +9,16 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 // Redux Actions
 import { getUserDetails, updateUserProfile } from '../actions/authAction'
-import { listUserOrders } from '../actions/orderAction'
+
 
 const Profile = ({ history }) => {
     
+     
     // State to hold email and password
-    //const user = useSelector((state) => state.auth.userInfo.user);
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
+    const user = useSelector(state => state.auth.userInfo?.user);
+
+    const [name, setName] = useState(user.name)
+    const [email, setEmail] = useState(user.email)
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [message, setMessage] = useState(null)
@@ -25,7 +27,7 @@ const Profile = ({ history }) => {
 
     // Get user details from Redux store
    const userDetails = useSelector((state) => state.userDetails)
-    const { loading, error, user } = userDetails
+    const { loading, error } = userDetails
 
     // Get user token from Redux store
     const userLogin = useSelector((state) => state. auth)
@@ -35,9 +37,7 @@ const Profile = ({ history }) => {
     const userUpdateProfile = useSelector((state) => state.userUpdateProfile)
     const { success } = userUpdateProfile
 
-    // Get user orders from Redux store
-    const orderListUser = useSelector((state) => state.orderListUser)
-    const { loading: loadingOrders, error: errorOrders, orders } = orderListUser
+   
 
       useEffect(() => {
         // If there is NO user info then redirect to login page
@@ -46,7 +46,7 @@ const Profile = ({ history }) => {
         } else {
             if (!user) {
                 dispatch(getUserDetails('profile'))
-                dispatch(listUserOrders())
+            
             } else {
                 setName(user.name)
                 setEmail(user.email)
@@ -66,18 +66,17 @@ const Profile = ({ history }) => {
     }
 
     return (
-        <Row>
-            <Col md={3}>
-                <h2> Profil de l'utilisateur</h2>
+                   <Col md={7}>
+                <h3> Profil de l'utilisateur</h3>
                 {error && <Message variant='danger'>{error}</Message>}
                 {message && <Message variant='danger'>{message}</Message>}
                 {success && (
-                    <Message variant='success'>Profile Updated</Message>
+                    <Message variant='success'>Profile acualisé avec succés</Message>
                 )}
                 {loading && <Loader />}
                 <Form onSubmit={submitHandler}>
                 <Form.Group controlId='name'>
-                        <Form.Label>Name</Form.Label>
+                        <Form.Label>Nom</Form.Label>
                         <Form.Control
                             type='text'
                             placeholder='Name'
@@ -87,7 +86,7 @@ const Profile = ({ history }) => {
                     </Form.Group>
                     
                     <Form.Group controlId='email'>
-                        <Form.Label>Email Address</Form.Label>
+                        <Form.Label> Addresse Email</Form.Label>
                         <Form.Control
                             type='email'
                             placeholder='email@example.com'
@@ -96,97 +95,30 @@ const Profile = ({ history }) => {
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group controlId='password'>
-                        <Form.Label>Password</Form.Label>
+                        <Form.Label>Mot de Passe</Form.Label>
                         <Form.Control
                             type='password'
                             placeholder='Enter password'
-                            value={password}
+                        
                             onChange={(e) => setPassword(e.target.value)}
                         ></Form.Control>
                     </Form.Group>
                     <Form.Group controlId='confirmPassword'>
-                        <Form.Label>Confirm Password</Form.Label>
+                        <Form.Label>Confirmer Mot de Passe</Form.Label>
                         <Form.Control
                             type='password'
                             placeholder='Confirm password'
-                            value={confirmPassword}
+                           
                             onChange={(e) => setConfirmPassword(e.target.value)}
                         ></Form.Control>
                     </Form.Group>
                     <Button type='submit' variant='primary'>
-                        Update
+                     Actualiser
                     </Button>
                 </Form>
             </Col>
-            <Col md={9}>
-                <h2>My Orders</h2>
-                {loadingOrders ? (
-                    <Loader />
-                ) : errorOrders ? (
-                    <Message variant='danger'>{errorOrders}</Message>
-                ) : (
-                    <Table
-                        striped
-                        bordered
-                        hover
-                        responsive
-                        className='table-sm'
-                    >
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>DATE</th>
-                                <th>TOTAL</th>
-                                <th>PAID</th>
-                                <th>DELIVERED</th>
-                                <th>DETAILS</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {orders.map((order) => (
-                                <tr key={order._id}>
-                                    <td>{order._id}</td>
-                                    <td>{order.createdAt.substring(0, 10)}</td>
-                                    <td>${order.totalPrice}</td>
-                                    <td>
-                                        {order.isPaid ? (
-                                            order.paidAt.substring(0, 10)
-                                        ) : (
-                                            <i
-                                                className='fas fa-times'
-                                                style={{ color: 'red' }}
-                                            ></i>
-                                        )}
-                                    </td>
-                                    <td>
-                                        {order.isDelivered ? (
-                                            order.deliveredAt.substring(0, 10)
-                                        ) : (
-                                            <i
-                                                className='fas fa-times'
-                                                style={{ color: 'red' }}
-                                            ></i>
-                                        )}
-                                    </td>
-                                    <td>
-                                        <Link
-                                            to={`/order/${order._id}`}
-                                        >
-                                            <Button
-                                                className='btn-sm'
-                                                variant='light'
-                                            >
-                                                Details
-                                            </Button>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </Table>
-                )}
-            </Col>
-        </Row>
+            
+      
     )
 }
 

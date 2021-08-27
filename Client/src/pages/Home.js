@@ -92,10 +92,6 @@ const Home = () => {
                 </Row>
 
  
-   
-
-
-
       <br/>
       <h1> babylando</h1>
       <br/>

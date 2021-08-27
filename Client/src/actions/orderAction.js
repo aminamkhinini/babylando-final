@@ -11,6 +11,10 @@ import {
   ORDER_LIST_USER_REQUEST,
   ORDER_LIST_USER_SUCCESS,
   ORDER_LIST_USER_FAIL,
+  ORDER_DELETE_REQUEST,
+  ORDER_DELETE_SUCCESS,
+  ORDER_DELETE_FAIL , 
+  ORDER_DELETE_RESET 
 } from '../actions/types'
 import axios from 'axios'
 
@@ -128,37 +132,3 @@ export const payOrder = (orderId, paymentResult) => async (dispatch,getState) =>
   }
 }
 
-export const listUserOrders = () => async (dispatch,getState) => {
-  try {
-      dispatch({
-          type: ORDER_LIST_USER_REQUEST,
-      })
-
-      // Get user login to get the bearer token
-      const {
-        auth: { userInfo },
-    } = getState()
-      // Header to send with the request
-      const config = {
-        headers: { "auth-token": localStorage.getItem('auth-token'),
-        "userInfo": localStorage.getItem('userInfo') },
-      }
-
-      // Make request to server and get the response data
-      const { data } = await axios.get(`/orders/myorders`, config)
-
-      // Dispatch user order pay success after making the request
-      dispatch({
-          type: ORDER_LIST_USER_SUCCESS,
-          payload: data,
-      })
-  } catch (error) {
-      dispatch({
-          type: ORDER_LIST_USER_FAIL,
-          payload:
-              error.response && error.response.data.message
-                  ? error.response.data.message
-                  : error.message,
-      })
-  }
-}

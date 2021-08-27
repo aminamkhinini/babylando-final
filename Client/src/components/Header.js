@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{ useState}from 'react'
 // Bootstrap UI Components
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -11,10 +11,12 @@ const Header = () => {
     const dispatch = useDispatch()
     const isAuth = useSelector((state) => state.auth.userInfo.isAuth);
     const user = useSelector(state => state.auth.userInfo.user);
+
+ 
     const role = useSelector(state=> state.auth.userInfo.user?.role)
-    const userLogin = useSelector((state) => state.auth.userInfo)
-    const {useInfo} = userLogin
-   // const role = useSelector((state) => state.auth.userInfo.user?.role);
+    const userLogin = useSelector((state) => state.auth)
+    const {userInfo} = userLogin
+
     const logoutHandler = () => {
         dispatch(logout())
     }
@@ -57,7 +59,9 @@ const Header = () => {
                                 {isAuth ? (
                                     <NavDropdown
                                         title={user.name}
+                                        
                                         id='username'
+                                         
                                     >
                                          {(user.role===user)? (
                                         <LinkContainer to='/profile'>
@@ -68,7 +72,7 @@ const Header = () => {
                                          ):(
                                             <LinkContainer to='/Admin'>
                                             <NavDropdown.Item>
-                                             Profile
+                                          Admin
                                             </NavDropdown.Item>
                                         </LinkContainer> 
                                          )}
@@ -83,7 +87,7 @@ const Header = () => {
                                     <LinkContainer to='/login'>
                                         <Nav.Link>
                                             <i className='fa fa-user mr-2'></i>
-                                            Sign In
+                                            Login
                                         </Nav.Link>
                                         
                                     </LinkContainer>

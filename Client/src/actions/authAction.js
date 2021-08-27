@@ -38,18 +38,25 @@ export const registerUser = (data, history) => async (dispatch) => {
 };
 
 //login
+
 export const loginUser = (data, history) => async (dispatch) => {
   try {
     dispatch({
       type:  USER_LOGIN_REQUEST,
   })
-    const res = await axios.post("/user/login", data);
+  // Header to send with the request
+  const config = {
+    headers: { "auth-token": localStorage.getItem('auth-token') ,
+    "userInfo":localStorage.getItem('userInfo'),
+  },
+  }
+    const res = await axios.post("/user/login", data,config);
     dispatch({ type: USER_LOGIN_SUCCESS, payload: res.data });
 
     if (res.data.User.role === "admin") history.push("/Admin");
     else history.push("/Profile");
-   
-    localStorage.setItem('userInfo', JSON.stringify(data))
+   localStorage.setItem('userInfo', JSON.stringify(data));
+  
  } catch (error) {
     dispatch({ type: USER_LOGIN_FAIL, payload: error?.response?.data?.message });
   }
@@ -80,39 +87,6 @@ export const logout = (history) => async (dispatch) => {
   }
 };
 
-// UserDetails
-/*{export const getUserDetails = (data) => async (dispatch) => {
-  try {
-      dispatch({
-          type: USER_DETAILS_REQUEST,
-      })
-
-     
-
-      // Header to send with the request
-      const config = {
-        headers: { "auth-token": localStorage.getItem('auth-token') },
-      }
-      localStorage.setItem('userInfo', JSON.stringify(data));
-      // Make request to server and get the response data
-
-      const res = await axios.get("/user/infor", data);
-     
-      dispatch({
-          type: USER_DETAILS_SUCCESS,
-          payload: res.data,
-      })
-          localStorage.setItem('userinfo', JSON.stringify(data));
-  } catch (error) {
-      dispatch({
-          type: USER_DETAILS_FAIL,
-          payload:
-              error.response && error.response.data.message
-                  ? error.response.data.message
-                  : error.message,
-      })
-  }
-}}*/
 
 
 
@@ -144,6 +118,7 @@ export const getUserDetails = () => async (dispatch, getState) => {
           payload: data,
       })
       
+      
   } catch (error) {
       dispatch({
           type: USER_DETAILS_FAIL,
@@ -159,7 +134,7 @@ export const getUserDetails = () => async (dispatch, getState) => {
 export const updateUserProfile = (user) => async (dispatch,getState) => {
   try {
       dispatch({
-          type: USER_UPDATE_PROFILE_REQUEST,
+          type: USER_UPDATE_PROFILE_REQUEST,payload:user
       })
 
       // Get user login and user info
@@ -170,7 +145,7 @@ export const updateUserProfile = (user) => async (dispatch,getState) => {
       // Header to send with the request
       const config = {
         headers: { "auth-token": localStorage.getItem('auth-token') ,
-        "userInfo":localStorage.getItem('userInfo', JSON.stringify(data)),
+        "userInfo":localStorage.getItem('userInfo'),
       },
       }
       // Make request to server and get the response data
@@ -181,7 +156,8 @@ export const updateUserProfile = (user) => async (dispatch,getState) => {
           type: USER_UPDATE_PROFILE_SUCCESS,
           payload: data,
       })
-     
+   //dispatch({ type:USER_LOGIN_SUCCESS, payload:data});
+     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
       dispatch({
           type: USER_UPDATE_PROFILE_FAIL,

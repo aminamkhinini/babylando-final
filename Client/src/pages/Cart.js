@@ -34,7 +34,7 @@ const productId=match.params.id
 
     return (
         <Row>
-            <Col md={8}>
+            <Col md={5}>
                 <h5>Panier d'Achat</h5>
                 {cartItems.length === 0 ? (
                     <>
@@ -107,7 +107,7 @@ const productId=match.params.id
                     </ListGroup>
                 )}
             </Col>
-            <Col md={4}>
+            <Col md={7}>
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
