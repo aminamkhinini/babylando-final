@@ -66,13 +66,13 @@ const Header = () => {
                                          {(user.role===user)? (
                                         <LinkContainer to='/profile'>
                                             <NavDropdown.Item>
-                                                Profile
+                                                Profil
                                             </NavDropdown.Item>
                                         </LinkContainer>
                                          ):(
                                             <LinkContainer to='/Admin'>
                                             <NavDropdown.Item>
-                                          Admin
+                                         Profil
                                             </NavDropdown.Item>
                                         </LinkContainer> 
                                          )}

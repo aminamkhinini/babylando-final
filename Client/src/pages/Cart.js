@@ -24,7 +24,7 @@ const productId=match.params.id
     }, [dispatch, productId, qty])
 
     const removeFromCartHandler = (id) => {
-      
+        // console.log('remove')
         dispatch(removeFromCart(id))
     }
 
@@ -111,14 +111,14 @@ const productId=match.params.id
                 <Card>
                     <ListGroup variant='flush'>
                         <ListGroup.Item>
-                            <h6>
+                            <h5>
                                 Subtotal (
                                    {cartItems.reduce(
                                     (acc, item) => acc + item.qty,
                                     0
                                 )}DT
                                 )  articles
-                            </h6>
+                            </h5>
                           
                             {cartItems
                                 .reduce(
